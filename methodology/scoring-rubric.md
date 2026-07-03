@@ -39,3 +39,22 @@ Combined score (Integration Ease + Relevance) maps to a priority tier.
 ## KQL Queries Used
 
 Query 1: Top SecurityAlert categories over 90 days
+
+```kql
+SecurityAlert
+| where TimeGenerated > ago(90d)
+| summarize count() by AlertName, ProductName
+| order by count_ desc
+```
+
+Query 2: Incident classifications over 90 days
+
+```kql
+
+SecurityIncident
+| where TimeGenerated > ago(90d)
+| summarize count() by Classification, IncidentName
+| order by count_ desc
+```
+
+These queries surface the dominant alert categories, which are then mapped to each feed's indicator coverage to score Relevance.
